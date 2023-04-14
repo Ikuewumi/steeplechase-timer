@@ -70,7 +70,15 @@ form.grid-flow {
 
 
 
-    padding: var(--p-4) var(--p-4);
+    padding-block: var(--p-4);
+    grid-template-columns: var(--p-2) 1fr var(--p-2);
+
+
+    & > * {
+        grid-column: 2 / -2;
+    }
+
+
 
 }
 
