@@ -21,7 +21,7 @@ const closeSettings = () => {
 
     <div class="field grid-flow">
         <label for="settings-questions">Number of Questions</label>
-        <input id="settings-questions" type="text" bind:value={$options.questions}>
+        <input id="settings-questions" inputmode="numeric" type="text" bind:value={$options.questions}>
     </div>
 
 
