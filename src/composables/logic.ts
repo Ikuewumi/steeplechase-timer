@@ -1,5 +1,5 @@
 import { get, type Writable } from "svelte/store"
-import { running, options, timeTotal, pathToSound } from "../store"
+import { running, options, timeTotal, showSettings } from "../store"
 interface AppWritables {
     timeTotal: Writable<number>,
     running: Writable<boolean>,
@@ -8,24 +8,6 @@ interface AppWritables {
         questions: number;
     }>
 }
-
-
-export async function loadAudioData(url: string) {
-        const res = await fetch(url)
-        const arrayBuffer = await res.arrayBuffer()
-        return arrayBuffer   
-    
-}
-
-
-export async function sleep(ms: number) {
-    return new Promise((res, rej) => {
-        
-    })
-
-
-}
-
 
 
 
@@ -90,6 +72,14 @@ class TimerLogic {
             } else {
                 this.stopClock()
             }
+        })
+
+
+        showSettings.subscribe(data => {
+            if (data) {
+                this.paused = false
+                this.writables.running.set(false)
+            } 
         })
 
 

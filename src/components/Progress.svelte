@@ -2,18 +2,19 @@
     import { onDestroy, onMount } from "svelte";
     import {timeTotal, options, running} from "../store"
     let audioEl: HTMLAudioElement
+    let svgEl: SVGElement
 
 
     let playAudio = () => {}
 
 
-    onMount(() => {
-        playAudio = () => audioEl.play()
-    })
-
-
+    
     $: time = () => {
         const modulus = $timeTotal % $options.time
+        if ($timeTotal === 0 && $options.questions === 0) {
+            playAudio()
+        }
+
         if (!$timeTotal){
             return 0
         }
@@ -23,6 +24,20 @@
         }
         return modulus
     }
+
+    $: reactive = (100 * time()) / $options.time
+    
+
+
+    onMount(() => {
+        playAudio = () => audioEl.play()
+        
+
+    })
+
+
+
+
 
 
     onDestroy(() => {
@@ -38,7 +53,7 @@
 
 
 <figure class="grid-flow">
-    <svg role="progressbar">
+    <svg role="progressbar" bind:this="{svgEl}" style="--percent: {reactive}">
         <circle class="track" />
         <circle class="progress" />
     </svg>

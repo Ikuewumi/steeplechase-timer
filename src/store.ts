@@ -10,3 +10,4 @@ export const options = writable({
 })
 export const paused = writable(false)
 export const pathToSound = writable('/sounds/bell.mp3');
+export const showSettings = writable(false)

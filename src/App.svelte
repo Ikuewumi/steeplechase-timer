@@ -1,17 +1,24 @@
 <script lang="ts">
   import Progress from "./components/Progress.svelte";
   import ButtonBar from "./components/ButtonBar.svelte";
+  import Settings from "./components/Settings.svelte";
   import {FontAwesomeIcon as Icon} from "@fortawesome/svelte-fontawesome";
-  import {options, running, timeTotal} from "./store"
+  import {options, running, timeTotal, showSettings} from "./store"
 
 
   $: questions = () => {
     if (!$running) {return $options.questions}
     return Math.ceil($timeTotal / $options.time)
   }
+
+  const openSettings = () => { $showSettings = true }
 </script>
 
 <main class="sg">
+  <section class="none">
+    <h1>SteepleChase Timer</h1>
+    <p>Use this to help you automate your steeplechases</p>
+  </section>
   <Progress />
   <ButtonBar />
   <section class="change-button-bar grid-flow">
@@ -27,11 +34,21 @@
 
   </section>
 
+
+
+
+
+  <button title="Toggle Settings" id="show-settings" on:click="{openSettings}">
+    <Icon icon="fa-solid fa-cogs" />
+  </button>
+
+  <Settings />
+
+
+
   <a id="code" title="Go To Code" href="https://github.com/Ikuewumi/steeplechase-timer">
     <Icon icon="fa-solid fa-code" />
   </a>
-
-
 </main>
 
 <style lang="scss">
@@ -51,14 +68,9 @@ main.sg {
   }
 
 
-
-  a#code {
+  a#code , button#show-settings {
     position: absolute;
-    inset: 0 0 auto auto;
     padding: calc(var(--p-2) * 1.5) var(--p-2);
-    padding-block-start: var(--p-2);
-    padding-inline-start: var(--p-3);
-    border-end-start-radius: 100vmax;
     border: none;
     outline: 1px solid currentColor;
     background: var(--moderateCyan);
@@ -74,6 +86,24 @@ main.sg {
       background-color: hsla(var(--moderateCyanHsl), 0.7);
       
     }
+  }
+
+
+  a#code {
+    inset: 0 0 auto auto;
+    padding-block-start: var(--p-2);
+    padding-inline-start: var(--p-3);
+    border-end-start-radius: 100vmax;
+  }
+
+
+  button#show-settings {
+    inset: 0 auto auto 0;
+    padding-block-start: var(--p-2);
+    padding-inline-end: var(--p-3);
+    border-end-end-radius: 100vmax;
+
+    z-index: 5;
   }
 }
 </style>
